@@ -8,6 +8,8 @@ import (
 	"fmt"
 	"os"
 	"strings"
+
+	"github.com/v-elvira/go_samples/match/glob"
 )
 
 func main() {
@@ -15,7 +17,7 @@ func main() {
 	if err != nil {
 		fail(err)
 	}
-	isMatch, err := match(pattern, src)
+	isMatch, err := glob.Match(pattern, src)
 	if err != nil {
 		fail(err)
 	}
