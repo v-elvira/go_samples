@@ -10,3 +10,6 @@ $ ./wordcount 'go is awesome'
 To make everything work, clone the repo and implement Go module.
 
 // cloned: https://github.com/gothanks/wordcount.git
+
+// go mod init github.com/v-elvira/go_samples/counter_task
+
