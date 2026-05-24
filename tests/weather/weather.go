@@ -20,19 +20,16 @@ func (ws *WeatherService) Forecast() int {
 }
 
 // start solutuion
-type Forecast interface {
+type Forecaster interface {
 	Forecast() int
 }
 
 type FakeWeatherService struct {
-	vals []int
-	cur  int
+	deg int
 }
 
 func (ws *FakeWeatherService) Forecast() int {
-	prediction := ws.vals[ws.cur]
-	ws.cur++
-	return prediction
+	return ws.deg
 }
 
 //end
@@ -40,7 +37,7 @@ func (ws *FakeWeatherService) Forecast() int {
 // Weather выдает текстовый прогноз погоды.
 type Weather struct {
 	// service *WeatherService
-	service Forecast
+	service Forecaster
 }
 
 // Forecast сообщает текстовый прогноз погоды на завтра.

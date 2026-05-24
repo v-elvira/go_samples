@@ -21,11 +21,11 @@ var tests []testCase = []testCase{
 
 func TestForecast(t *testing.T) {
 	// service := &WeatherService{}
-	service := &FakeWeatherService{vals: []int{-10, 0, 5, 10, 15, 20}, cur: 0}
-	weather := Weather{service}
 	for _, test := range tests {
 		name := fmt.Sprintf("%v", test.deg)
 		t.Run(name, func(t *testing.T) {
+			service := &FakeWeatherService{test.deg}
+			weather := Weather{service}
 			got := weather.Forecast()
 			if got != test.want {
 				t.Errorf("%s: got %s, want %s", name, got, test.want)
