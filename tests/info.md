@@ -56,3 +56,15 @@ $ go test -v -run N
 $ go test -v -run Few
 ``` 
 (only SumFew)
+
+//-------------------------------------------------------
+
+## Test Coverage:
+`$ go test -cover`
+(%)
+
+Построчный: создать файл cover.prof
+`$ go test -coverprofile="cover.prof"`
+(создать отчет)
+`go tool cover -html="cover.prof"`
+(посмотреть, по каким строчкам прошли тесты)
