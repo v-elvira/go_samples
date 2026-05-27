@@ -41,14 +41,14 @@ func parseTasks(date time.Time, lines []string) ([]Task, error) {
 	if err != nil {
 		return nil, err
 	}
-	tasks := []Task{}
-	day_tasks := make(map[string]int)
+	tasks := make([]Task, 0, len(lines))
+	day_tasks := make(map[string]int, len(lines))
 
 	for _, line := range lines {
 		var start_time, stop_time time.Time
 		var err error
 		parts := re.FindStringSubmatch(line)
-		if len(parts) < 4 {
+		if len(parts) != 4 {
 			return nil, errors.New("wrong task format")
 		}
 		if start_time, err = time.Parse("15:04", parts[1]); err != nil {
@@ -57,14 +57,16 @@ func parseTasks(date time.Time, lines []string) ([]Task, error) {
 		if stop_time, err = time.Parse("15:04", parts[2]); err != nil {
 			return nil, err
 		}
-		if start_time.After(stop_time) || start_time.Equal(stop_time) {
+		dur := stop_time.Sub(start_time)
+		if dur <= 0 {
 			return nil, errors.New("negative task duration")
 		}
+
 		title := parts[3]
 		if idx, ok := day_tasks[title]; ok {
 			tasks[idx].Dur += stop_time.Sub(start_time)
 		} else {
-			tasks = append(tasks, Task{Date: date, Dur: stop_time.Sub(start_time), Title: title})
+			tasks = append(tasks, Task{Date: date, Dur: dur, Title: title})
 			day_tasks[title] = len(tasks) - 1
 		}
 	}
